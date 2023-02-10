@@ -1,0 +1,1 @@
+export { BookGeneralInfo } from './book-general-info';
