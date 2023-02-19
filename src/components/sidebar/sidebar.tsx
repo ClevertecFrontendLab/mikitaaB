@@ -26,7 +26,6 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 	const [isShowcaseOpen, setIsShowcaseOpen] = useState(true);
 	const { category } = useParams();
 	const getNavItemStyle = (path: PathTypes) => location.pathname.includes(path) ? s.navItemActive : s.navItem;
-	// const allBooksActive = 
 	const menuItemActive = ({ isActive }: NavLinkProps) => isActive ? s.activeItem : '';
 	const onClickMenuItem = () => {
 		closeMenuHandler?.();

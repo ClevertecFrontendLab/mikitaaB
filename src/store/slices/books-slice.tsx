@@ -2,22 +2,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { BookInterface } from '../../types';
-
-const apiBooks = 'https://strapi.cleverland.by/api/books';
+import { apiBooksEndpoint } from '../../constants';
+import { BookInterface, BooksStateType } from '../../types';
 
 export const getBooksThunk = createAsyncThunk(
     'books', async (): Promise<BookInterface[]> => {
-        const booksData = await axios.get(apiBooks).then(response => response.data);
+        const booksData = await axios.get(apiBooksEndpoint).then(response => response.data);
 
         return booksData;
     }
 )
-
-type BooksStateType = {
-    books: BookInterface[],
-    status: string | null
-}
 
 const initialState: BooksStateType = {
     books: [],

@@ -2,13 +2,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { apiCategoriesEndpoint } from '../../constants';
 import { CategoriesStateType, CategoryType } from '../../types';
-
-const apiCategories = 'https://strapi.cleverland.by/api/categories';
 
 export const getCategoriesThunk = createAsyncThunk(
     'categories', async (): Promise<CategoryType[]> => {
-        const categoryData = await axios.get(apiCategories).then(response => response.data);
+        const categoryData = await axios.get(apiCategoriesEndpoint).then(response => response.data);
 
         return categoryData;
     }
@@ -39,4 +38,3 @@ const categoriesSlice = createSlice({
 });
 
 export const { reducer } = categoriesSlice;
-export const actionsCategories = { getCategoriesThunk };

@@ -1,3 +1,6 @@
+
+type StatusType = 'loading' | 'resolved' | 'failed';
+
 export type CategoryType = {
     name: string,
     path: string,
@@ -7,7 +10,7 @@ export type CategoryType = {
 
 export type CategoriesStateType = {
     categories: CategoryType[],
-    status: string | null
+    status: StatusType | null
 }
 
 type ImageType = {
@@ -81,4 +84,14 @@ export interface BookDetailType extends Omit<BookInterface, 'image'> {
     producer: string,
     images: ImagesType[],
     comments: CommentsType[] | null
+}
+
+export type BooksStateType = {
+    books: BookInterface[],
+    status: StatusType | null
+}
+
+export type BookDerailStateType = {
+    book: BookDetailType[],
+    status: string | null
 }

@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { BookDetailType } from '../../types';
+import { BookDerailStateType, BookDetailType } from '../../types';
 
 const apiBookById = 'https://strapi.cleverland.by/api/books';
 
@@ -14,12 +14,7 @@ export const getBookThunk = createAsyncThunk(
     }
 )
 
-type BooksStateType = {
-    book: BookDetailType[],
-    status: string | null
-}
-
-const initialState: BooksStateType = {
+const initialState: BookDerailStateType = {
     book: [],
     status: null
 }
