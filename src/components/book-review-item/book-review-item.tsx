@@ -1,5 +1,7 @@
 import { FC } from 'react';
+import { host } from '../../constants';
 import { RatingInfo } from '../rating-info';
+import reviewUser from '../../assets/image/reviewUser.png';
 
 import s from './book-review-item.module.scss';
 
@@ -13,12 +15,13 @@ type BookReviewItemPropsType = {
 
 export const BookReviewItem: FC<BookReviewItemPropsType> = (props) => {
     const { userPhoto, userName, rating, date, text } = props;
+    const userPhotoSrc = userPhoto ? `${host}${userPhoto}` : reviewUser;
 
     return (
         <div className={s.reviewItemContainer}>
             <div className={s.reviewTitleContainer}>
                 <div className={s.userNamePhoto}>
-                    <img src={userPhoto} alt='userPhoto' />
+                    <img src={userPhotoSrc} alt='userPhoto' />
                 </div>
                 <div className={s.userName}>{userName}</div>
                 <div className={s.date}>{date}</div>

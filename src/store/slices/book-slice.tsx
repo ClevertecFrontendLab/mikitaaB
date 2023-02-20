@@ -1,22 +1,21 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { apiBooksEndpoint } from '../../constants';
 
-import { BookDerailStateType, BookDetailType } from '../../types';
-
-const apiBookById = 'https://strapi.cleverland.by/api/books';
+import { BookDetailStateType, BookDetailType } from '../../types';
 
 export const getBookThunk = createAsyncThunk(
-    'book', async (bookId: number): Promise<BookDetailType[]> => {
-        const bookData = await axios.get(`${apiBookById}/${bookId}`).then(response => response.data);
+    'book', async (bookId: number): Promise<BookDetailType> => {
+        const bookData = await axios.get(`${apiBooksEndpoint}/${bookId}`).then(response => response.data);
 
         return bookData;
     }
 )
 
-const initialState: BookDerailStateType = {
-    book: [],
-    status: null
+const initialState: BookDetailStateType = {
+    book: null,
+    status: 'idle'
 }
 
 const bookSlice = createSlice({
@@ -28,11 +27,11 @@ const bookSlice = createSlice({
             state.status = 'loading';
         });
         builder.addCase(getBookThunk.fulfilled, (state, action) => {
-            state.book = action.payload
+            state.book = action.payload;
             state.status = 'resolved';
         });
         builder.addCase(getBookThunk.rejected, (state) => {
-            state.book = [];
+            state.book = null;
             state.status = 'failed';
         })
     }

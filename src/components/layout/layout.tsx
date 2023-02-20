@@ -8,7 +8,7 @@ import { Footer } from '../footer';
 import s from './layout.module.scss';
 
 export const Layout: FC = () => (
-    <div className={s.layoutPage}>
+    <div className={s.layoutPage} data-test-id='loader'>
         <Header />
         <Outlet />
         <Footer />

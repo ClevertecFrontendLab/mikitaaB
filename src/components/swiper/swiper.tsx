@@ -14,18 +14,19 @@ import 'swiper/css/effect-fade'
 import './swiper.css'
 
 import { FreeMode, Thumbs, Scrollbar, Pagination, EffectFade } from 'swiper';
+import { ImageType } from '../../types';
+import { host } from '../../constants';
 
-type ImageBookType = {
-    id: number,
-    src: string
-}
 type SwiperImagesPropsType = {
-    images: ImageBookType[]
+    images: ImageType[]
 }
 
 export const SwiperImages: FC<SwiperImagesPropsType> = ({ images }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
     const thumbsInit = thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null;
+
+    // eslint-disable-next-line no-param-reassign
+    images = images.map((image, index) => ({ ...image, id: index }));
 
     return (
         <Fragment>
@@ -42,7 +43,7 @@ export const SwiperImages: FC<SwiperImagesPropsType> = ({ images }) => {
                 {
                     images.map(image => (
                         <SwiperSlide key={image.id}>
-                            <img src={image.src} alt='book-el' />
+                            <img src={`${host}{image.url}`} alt='book-el' />
                         </SwiperSlide>
                     ))
                 }
@@ -59,7 +60,7 @@ export const SwiperImages: FC<SwiperImagesPropsType> = ({ images }) => {
                 {
                     images.map(image => (
                         <SwiperSlide key={image.id}>
-                            <img src={image.src} alt='book-el' data-test-id='slide-mini' />
+                            <img src={`${host}{image.url}`} alt='book-el' data-test-id='slide-mini' />
                         </SwiperSlide>
                     ))
                 }

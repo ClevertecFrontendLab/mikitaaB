@@ -13,7 +13,7 @@ export const Error: FC = () => {
     }
 
     return (
-        <div className={isCloseError ? s.hideErrorContainer : s.errorContainer}>
+        <div className={isCloseError ? s.hideErrorContainer : s.errorContainer} data-test-id='error'>
             <img src={warningIcon} alt='warning-icon' className={s.warningIcon} />
             <div className={s.errorText}>
                 Что-то пошло не так. Обновите страницу через некоторое время.

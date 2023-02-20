@@ -31,11 +31,13 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 		closeMenuHandler?.();
 	}
 
-	const getCategories = (state: RootStore): CategoriesStateType => state.category;
-	const booksCategoryItems = useSelector<RootStore, CategoryType[]>((state: RootStore) => getCategories(state).categories);
+	const categoriesData = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
+	const booksCategoryItems = categoriesData.categories;
+	const categoriesLoadStatus = categoriesData.status;
+	const isLoadResolved = categoriesLoadStatus === 'resolved';
 
 	useEffect(() => {
-		dispatch(getCategoriesThunk())
+		dispatch(getCategoriesThunk());
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -67,28 +69,34 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 						<NavLink to='/books/all' className={s.toggleShowcaseButton} onClick={onClickShowcase}
 							data-test-id={isMenuOpen ? 'burger-showcase' : 'navigation-showcase'}>
 							Витрина книг
-							<div className={s.arrowIconBlock}>
-								<img src={menuArrowIcon} className={showcaseIconStyle} alt='arrow-menu' />
-							</div>
+							{
+								isLoadResolved &&
+								<div className={s.arrowIconBlock}>
+									<img src={menuArrowIcon} className={showcaseIconStyle} alt='arrow-menu' />
+								</div>
+							}
 						</NavLink>
 					</li>
-					<ul className={bookCategoriesStyle}>
-						<NavLink to='/books/all' className={menuItemActive} onClick={onClickMenuItem}
-							data-test-id='burger-books'>
-							<span>Все книги</span>
-						</NavLink>
-						{
-							booksCategoryItems.map(el => (
-								<li key={el.id}>
-									<NavLink to={`books/${el.path}`} className={menuItemActive} onClick={onClickMenuItem}
-										data-test-id='navigation-books'>
-										<span>{el.name}</span>
-										<span className={s.categoryCount}>{el.count}</span>
-									</NavLink>
-								</li>
-							))
-						}
-					</ul>
+					{
+						isLoadResolved &&
+						<ul className={bookCategoriesStyle}>
+							<NavLink to='/books/all' className={menuItemActive} onClick={onClickMenuItem}
+								data-test-id='burger-books'>
+								<span>Все книги</span>
+							</NavLink>
+							{
+								booksCategoryItems.map(el => (
+									<li key={el.id}>
+										<NavLink to={`books/${el.path}`} className={menuItemActive} onClick={onClickMenuItem}
+											data-test-id='navigation-books'>
+											<span>{el.name}</span>
+											<span className={s.categoryCount}>{el.count}</span>
+										</NavLink>
+									</li>
+								))
+							}
+						</ul>
+					}
 					<li className={getNavItemStyle('/terms')}>
 						<NavLink to='/terms' className={menuItemActive}
 							onClick={onClickMenuItem}

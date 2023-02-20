@@ -1,23 +1,20 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import s from './breadcrumbs.module.scss';
 
-type BreadcrumbsPropsType = {
-    bookId: string | undefined,
-    categoryPath: string | undefined,
-    category: string,
-    title: string
-}
+export const Breadcrumbs: FC = () => {
+    const { categoryPath, bookId } = useParams();
 
-export const Breadcrumbs: FC<BreadcrumbsPropsType> = ({ bookId, categoryPath, category, title }) => {
+    const categoryName = 'Бизнес';
+    const bookTitle = 'Грокаем алгоритмы';
     const delimiter = ' / ';
 
     return (
         <div className={s.breadcrumbsContainer}>
-            <Link to={`/books/${categoryPath}`}>{category}</Link>
+            <Link to={`/books/${categoryPath}`}>{categoryName}</Link>
             <span className={s.space}>{delimiter}</span>
-            <Link to={`/books/${category}/${bookId}`}>{title}</Link>
+            <Link to={`/books/${categoryPath}/${bookId}`}>{bookTitle}</Link>
         </div>
     );
 }

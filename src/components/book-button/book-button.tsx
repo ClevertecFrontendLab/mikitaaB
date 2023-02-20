@@ -1,28 +1,31 @@
 import { FC } from 'react';
+import { BookingType, DeliveryType } from '../../types';
 
 import s from './book-button.module.scss';
 
 type BookButtonType = {
-    isBooked: boolean,
-    bookedTill: string
+    booking: BookingType | null,
+    delivery: DeliveryType | null
 }
 
-export const BookButton: FC<BookButtonType> = ({ isBooked, bookedTill }) => {
+export const BookButton: FC<BookButtonType> = ({ booking, delivery }) => {
     let buttonText;
-    let buttonClassName;
+    let buttonClassName = s.disabledButton;
 
-    if (isBooked || bookedTill) {
-        const bookDate = new Date(bookedTill);
+    if (booking?.order) {
+        buttonText = 'ЗАБРОНИРОВАНА';
+    }
+    if (delivery?.handed) {
+        const bookDate = new Date(delivery.dateHandedTo);
         const bookDay = new Intl.DateTimeFormat('en', {
             'day': '2-digit'
         }).format(bookDate);
         const bookMonth = new Intl.DateTimeFormat('en', {
             'month': '2-digit'
         }).format(bookDate);
-
-        buttonText = isBooked ? 'ЗАБРОНИРОВАНА' : `ЗАНЯТА ДО ${bookDay}.${bookMonth}`;
-        buttonClassName = s.disabledButton;
-    } else {
+        buttonText = `ЗАНЯТА ДО ${bookDay}.${bookMonth}`;
+    }
+    if (!booking && !delivery) {
         buttonText = 'ЗАБРОНИРОВАТЬ';
         buttonClassName = s.enabledButton;
     }

@@ -1,6 +1,8 @@
 .layoutMainPage {
     display: flex;
     padding: 47px 0 62px 0;
+    position: relative;
+    min-height: 100vh;
 
     @media screen and (min-width: 320px) {
         width: 288px;

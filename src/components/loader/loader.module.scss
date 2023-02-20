@@ -1,5 +1,6 @@
 .loaderContainer {
     position: fixed;
+    z-index: 5;
     top: 0;
     left: 0;
     width: 100vw;
@@ -15,20 +16,21 @@
     background: url("../../assets/icon/loaderIcon.png") no-repeat center;
     border-radius: 50%;
     animation: rotation 0.8s linear infinite;
+    width: 68.75px;
+    height: 68.75px;
 
-    @media screen and (min-width: 320px) {
+    @media screen and (max-width: 768px) {
         width: 22px;
         height: 22px;
+        border: 5px solid rgb(248, 89, 8);
+        border-bottom-color: transparent;
     }
 
     @media screen and (min-width: 768px) {
         width: 44px;
         height: 44px;
-    }
-
-    @media screen and (min-width: 1440px) {
-        width: 68.75px;
-        height: 68.75px;
+        border: 5px solid rgb(248, 89, 8);
+        border-bottom-color: transparent;
     }
 }
 

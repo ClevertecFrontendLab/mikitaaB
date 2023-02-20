@@ -6,33 +6,31 @@ import { BookButton } from '../book-button';
 import { RatingInfo } from '../rating-info';
 
 import noBookImage from '../../assets/image/noBookImage.png';
+import { BookingType, DeliveryType, ImageType } from '../../types';
+import { host } from '../../constants';
 
-type ImageBookType = {
-    id: number,
-    src: string
-}
 type CardPropsType = {
-    author: string,
+    authors: string[],
     title: string,
-    bookedTill: string,
-    image: ImageBookType[],
-    isBooked: boolean,
+    booking: BookingType | null,
+    delivery: DeliveryType | null,
+    image: ImageType | null
     isListView: boolean,
-    rating: number,
-    year: number
+    rating: number | null,
+    issueYear: string
 }
 
 export const Card: FC<CardPropsType> = (props) => {
-    const { author, title, bookedTill, image, isBooked, isListView, rating, year } = props;
-    const authorStr = author ? `${author}, ` : '';
-    const authorYear = `${authorStr}${year}`;
+    const { authors, title, booking, image, delivery, isListView, rating, issueYear } = props;
+    const authorStr = authors ? `${authors}, ` : '';
+    const authorYear = `${authorStr}${issueYear}`;
     const containerClassName = isListView ? s.listView : s.gridView;
+    const imageSrc: string = image?.url ? `${host}${image.url}` : noBookImage;
 
     return (
         <div data-test-id='card' className={containerClassName}>
             <div className={s.imageContainer}>
-                <img className={s.image} alt='bookImage'
-                    src={image.length ? image[0].src : noBookImage} />
+                <img src={imageSrc} className={s.image} alt='bookImage' />
             </div>
             <div className={s.bookDescription}>
                 <div className={s.ratingContainer}>
@@ -45,7 +43,7 @@ export const Card: FC<CardPropsType> = (props) => {
                 <div className={s.bookTitle}>{title}</div>
                 <div className={s.authorYear}>{authorYear}</div>
                 <div className={s.bookButton}>
-                    <BookButton isBooked={isBooked} bookedTill={bookedTill} />
+                    <BookButton booking={booking} delivery={delivery} />
                 </div>
             </div>
         </div>

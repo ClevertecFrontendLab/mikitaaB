@@ -15,7 +15,7 @@ export const getBooksThunk = createAsyncThunk(
 
 const initialState: BooksStateType = {
     books: [],
-    status: null
+    status: 'idle'
 }
 
 const booksSlice = createSlice({

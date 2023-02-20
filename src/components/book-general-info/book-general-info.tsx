@@ -6,31 +6,31 @@ import noBookImage from '../../assets/image/noBookImage.png';
 import { BookButton } from '../book-button';
 
 import s from './book-general-info.module.scss';
+import { BookingType, DeliveryType, ImageType } from '../../types';
+import { host } from '../../constants';
 
-type ImageBookType = {
-    id: number,
-    src: string
-}
 type BookGeneralInfoType = {
-    author: string,
-    isBooked: boolean,
-    bookedTill: string,
-    image: ImageBookType[],
+    authors: string[],
+    images: ImageType[],
     title: string,
-    year: number
+    description: string,
+    issueYear: string,
+    booking: BookingType | null,
+    delivery: DeliveryType | null
 }
 
-export const BookGeneralInfo: FC<BookGeneralInfoType> = ({ author, isBooked, bookedTill, image, title, year }) => {
-    const authorStr = author ? `${author}, ` : '';
-    const authorYear = `${authorStr}${year}`;
-    const zeroSingleImageSrc = image.length ? image[0].src : noBookImage;
+export const BookGeneralInfo: FC<BookGeneralInfoType> = (props) => {
+    const { authors, images, title, description, issueYear, booking, delivery } = props;
+    const authorStr = authors ? `${authors}, ` : '';
+    const authorYear = `${authorStr}${issueYear}`;
+    const zeroSingleImageSrc = images.length ? `${host}${images[0].url}` : noBookImage;
 
     return (
         <section className={s.bookGeneralInfoSection}>
             <div className={s.imageContainer}>
                 {
-                    image.length > 1 ?
-                        <SwiperImages images={image} /> :
+                    images.length > 1 ?
+                        <SwiperImages images={images} /> :
                         <img className={s.image} src={zeroSingleImageSrc} alt='no-book' />
                 }
             </div>
@@ -38,20 +38,13 @@ export const BookGeneralInfo: FC<BookGeneralInfoType> = ({ author, isBooked, boo
                 <div className={s.bookGeneralInfoTitle}>{title}</div>
                 <div className={s.authorYearInfo}>{authorYear}</div>
                 <div className={s.bookButton}>
-                    <BookButton isBooked={isBooked} bookedTill={bookedTill} />
+                    <BookButton booking={booking} delivery={delivery} />
                 </div>
             </div>
             <div className={s.descriptionContent}>
                 <div className={s.aboutBook}>О книге</div>
                 <p className={s.descriptionBook}>
-                    Алгоритмы — это всего лишь пошаговые алгоритмы решения задач, и большинство таких задач уже были кем-то
-                    решены, протестированы и проверены. Можно, конечно, погрузится в глубокую философию гениального Кнута,
-                    изучить многостраничные фолианты с доказательствами и обоснованиями, но хотите ли вы тратить на это свое
-                    время?
-                </p>
-                <p className={s.descriptionBook}>
-                    Откройте великолепно иллюстрированную книгу и вы сразу поймете, что алгоритмы — это просто. А грокать
-                    алгоритмы — это веселое и увлекательное занятие.
+                    {description}
                 </p>
             </div>
         </section>

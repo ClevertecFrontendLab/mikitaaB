@@ -1,5 +1,4 @@
-
-type StatusType = 'loading' | 'resolved' | 'failed';
+export type StatusType = 'idle' | 'loading' | 'resolved' | 'failed';
 
 export type CategoryType = {
     name: string,
@@ -10,14 +9,15 @@ export type CategoryType = {
 
 export type CategoriesStateType = {
     categories: CategoryType[],
-    status: StatusType | null
+    status: StatusType
 }
 
-type ImageType = {
+export type ImageType = {
+    id?: number;
     url: string
 }
 
-type BookingType = {
+export type BookingType = {
     id: number,
     order: boolean,
     dateOrder: string,
@@ -26,7 +26,7 @@ type BookingType = {
     customerLastName: string
 }
 
-type DeliveryType = {
+export type DeliveryType = {
     id: number,
     handed: boolean,
     dateHandedFrom: string,
@@ -54,7 +54,7 @@ export interface BookInterface {
     histories: HistoryType[] | null,
 }
 
-type CommentsType = {
+export type CommentsType = {
     id: number,
     rating: number,
     text: string,
@@ -88,10 +88,10 @@ export interface BookDetailType extends Omit<BookInterface, 'image'> {
 
 export type BooksStateType = {
     books: BookInterface[],
-    status: StatusType | null
+    status: StatusType
 }
 
-export type BookDerailStateType = {
-    book: BookDetailType[],
-    status: string | null
+export type BookDetailStateType = {
+    book: BookDetailType | null,
+    status: StatusType
 }

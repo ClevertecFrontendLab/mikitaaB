@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { BookDetailsInfo } from '../../components/book-details-info';
 import { BookGeneralInfo } from '../../components/book-general-info';
@@ -6,31 +7,63 @@ import { BookReviewInfo } from '../../components/book-review-info';
 import { Breadcrumbs } from '../../components/breadcrumbs';
 import { RatingInfo } from '../../components/rating-info';
 
-import { booksCategoryItems, booksData } from '../../mocks';
+import { AppDispatch, RootStore } from '../../store/store';
+import { BookDetailStateType, BookDetailType, CategoriesStateType, CategoryType, StatusType } from '../../types';
+import { getBookThunk } from '../../store/slices/book-slice';
+import { Error } from '../../components/error';
+import { Loader } from '../../components/loader';
 
 import s from './book-page.module.scss';
+import { getCategoriesThunk } from '../../store/slices/categories-slice';
 
 export const BookPage: FC = () => {
-    const { category, bookId } = useParams();
-    const bookRes = booksData.find(book => book.id === bookId);
-    const categoryName: string = booksCategoryItems.find(cat => cat.category === category)?.name as string;
+    const { bookId } = useParams();
+    const dispatch = useDispatch<AppDispatch>();
+    const bookDetailData = useSelector<RootStore, BookDetailStateType>((state: RootStore) => state.book);
+    const bookData: BookDetailType | null = bookDetailData.book;
+    const bookStatusLoading: StatusType = bookDetailData.status;
 
-    return (!!bookRes && ('id' in bookRes)) ? (
+    useEffect(() => {
+        dispatch(getBookThunk((Number(bookId))));
+    }, [bookId, dispatch]);
+
+    const isBookLoadFailed = !bookStatusLoading || bookStatusLoading === 'failed';
+    const isBookLoading = bookStatusLoading === 'loading';
+
+    return (
         <section className={s.bookPage}>
-            <Breadcrumbs categoryPath={category} bookId={bookId} category={categoryName} title={bookRes.title} />
-            <div className={s.wrapperContainer}>
-                <BookGeneralInfo author={bookRes?.author} image={bookRes?.image} title={bookRes?.title} year={bookRes?.year}
-                    isBooked={bookRes?.isBooked} bookedTill={bookRes?.bookedTill} />
-                <div className={s.ratingContainer}>
-                    <span className={s.ratingInfoClass}>Рейтинг</span>
-                    <div className={s.starValueRating}>
-                        <RatingInfo rating={bookRes.rating} />
-                        <span className={s.ratingValue}>{bookRes.rating}</span>
-                    </div>
-                </div>
-                <BookDetailsInfo />
-                <BookReviewInfo />
-            </div>
+            <Breadcrumbs />
+            { isBookLoadFailed && <div className={s.errorContainer}><Error /></div> }
+            { isBookLoading && <Loader /> }
+            {
+                (!!bookData && ('id' in bookData)) ?
+                    (
+                        <div className={s.wrapperContainer}>
+                            <BookGeneralInfo authors={bookData.authors} images={bookData.images} title={bookData.title}
+                                description={bookData.description}
+                                issueYear={bookData.issueYear} booking={bookData.booking} delivery={bookData.delivery} />
+                            <div className={s.ratingContainer}>
+                                <span className={s.ratingInfoClass}>Рейтинг</span>
+                                <div className={s.starValueRating}>
+                                    {
+                                        bookData.rating ?
+                                            <>
+                                                <RatingInfo rating={bookData.rating} />
+                                                <span className={s.ratingValue}>{bookData.rating}</span>
+                                            </> :
+                                            <span className={s.noRating}>ещё нет оценок</span>
+                                    }
+                                </div>
+                            </div>
+                            <BookDetailsInfo publish={bookData.publish} pages={bookData.pages}
+                                producer={bookData.producer} format={bookData.format} isbn={bookData.ISBN}
+                                categories={bookData.categories}
+                                weight={bookData.weight} issueYear={bookData.issueYear} cover={bookData.cover} />
+                            <BookReviewInfo comments={bookData.comments} />
+                        </div>
+                    ) :
+                    <div />
+            }
         </section>
-    ) : <div />;
+    )
 };

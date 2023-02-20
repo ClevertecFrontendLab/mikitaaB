@@ -1,13 +1,16 @@
 import { FC, useState } from 'react';
 
-import { reviewDataTemplate } from '../../mocks';
 import { BookReviewItem } from '../book-review-item';
 import reviewBlackArrow from '../../assets/icon/reviewBlackArrow.png';
 
 import s from './book-review-info.module.scss';
+import { CommentsType } from '../../types';
 
-export const BookReviewInfo: FC = () => {
-    const [reviewData] = useState(reviewDataTemplate);
+type BookReviewType = {
+    comments: CommentsType[] | null
+}
+
+export const BookReviewInfo: FC<BookReviewType> = ({ comments }) => {
     const [isShowReview, setIsShowReview] = useState(true);
     const reviewIconStyle = isShowReview ? s.collapseReviewImgActive : s.collapseReviewImg;
     const onClickToggleReview = () => setIsShowReview(!isShowReview);
@@ -16,22 +19,22 @@ export const BookReviewInfo: FC = () => {
         <div className={s.reviewInfoContainer}>
             <div className={s.reviewTitle}>
                 <span className={s.reviewTitleText}>Отзывы</span>
-                <span className={s.reviewCount}>{reviewData.length}</span>
+                <span className={s.reviewCount}>{comments ? comments.length : 0}</span>
                 <button type='button' data-test-id='button-hide-reviews'
                     onClick={onClickToggleReview} className={s.collapseReviewButton}>
-                    <img src={reviewBlackArrow} className={`reviewIconStyle ${s.collapseReviewIcon}`} alt='review-arrow' />
+                    { !!comments && <img src={reviewBlackArrow} className={`reviewIconStyle ${s.collapseReviewIcon}`} alt='review-arrow' /> }
                 </button>
             </div>
             {
                 isShowReview && <div className={s.reviewContainer}>
                     {
-                        reviewData.map(el => (
+                        comments && comments.map(el => (
                             <BookReviewItem
                                 key={el.id}
-                                userPhoto={el.userPhoto}
-                                userName={el.userName}
+                                userPhoto={el.user.avatarUrl}
+                                userName={`${el.user.firstName} ${el.user.lastName}`}
                                 rating={el.rating}
-                                date={el.date}
+                                date={el.createdAt}
                                 text={el.text}
                             />
                         ))
