@@ -1,0 +1,31 @@
+.navigationListBar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.searchSortBar {
+    display: flex;
+    gap: 16px;
+}
+
+.searchSortBarActive {
+    width: 100%;
+}
+
+.switchView {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 16px;
+    gap: 16px;
+}
+
+.hideSwitchViewBtns {
+    display: block;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+}

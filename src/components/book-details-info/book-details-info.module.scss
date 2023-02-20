@@ -1,0 +1,131 @@
+.bookDetailsInfoSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailsTable {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+}
+
+.rowDetails {
+    display: flex;
+    max-width: 635px;
+    gap: 72px;
+
+    @media (max-width: 768px) {
+        gap: 30px;
+    }
+
+    @media (max-width: 660px) {
+        gap: 24px;
+    }
+}
+
+.columnDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 329px;
+
+    @media (max-width: 768px) {
+        width: 305px;
+        min-width: unset;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.detailsInfoTitle {
+    text-align: left;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #EBEBEB;
+
+    @media (min-width: 320px) {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 28px;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        width: 305px;
+    }
+
+    @media (min-width: 1440px) {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 28px;
+        width: 350px;
+    }
+}
+
+.keyDetails {
+    color: #A7A7A7;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    width: 120px;
+
+    @media (min-width: 320px) {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 18px;
+        width: 105px;
+    }
+
+    @media (min-width: 1440px) {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        width: 120px;
+    }
+}
+
+
+.valueDetails {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+
+    @media (min-width: 320px) {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.2px;
+        max-width: 130px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        max-width: 170px;
+    }
+
+    @media (min-width: 1440px) {
+        font-size: 16px;
+        line-height: 24px;
+        max-width: 430px;
+    }
+}

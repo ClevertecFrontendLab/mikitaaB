@@ -1,0 +1,81 @@
+.errorContainer {
+    position: fixed;
+    top: 68px;
+    height: auto;
+    z-index: 5;
+    background: #FEEBEA;
+    border: 1.5px solid #F42C4F;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (min-width: 320px) {
+        align-items: flex-start;
+        top: 56px;
+        width: 288px;
+        padding: 12px 16px;
+    }
+
+    @media screen and (min-width: 768px) {
+        align-items: center;
+        top: 62px;
+        width: 640px;
+        padding: 24px 12px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        top: 64px;
+        width: 1110px;
+        padding: 24px 32px;
+    }
+}
+
+.errorText {
+    flex-grow: 1;
+    padding-left: 28px;
+    font-weight: 600;
+
+    @media screen and (max-width: 768px) {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+.closeButton {
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+
+    display: block;
+    overflow: hidden;
+    margin-left: auto;
+    flex: 0 0 auto;
+    cursor: pointer;
+
+    @media screen and (min-width: 320px) {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.hideErrorContainer {
+    display: none;
+}
+
+.warningIcon {
+    @media screen and (max-width: 320px) {
+        width: 24px;
+        height: 24px;
+    }
+
+    @media screen and (min-width: 768px) {
+        width: 32px;
+        height: 32px;
+    }
+}

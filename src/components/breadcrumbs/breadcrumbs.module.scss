@@ -1,0 +1,33 @@
+.breadcrumbsContainer {
+    vertical-align: middle;
+    background: #F9F9FA;
+    color: #A7A7A7;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    width: 100vw;
+
+    @media screen and (min-width: 320px) {
+        padding-left: 1em;
+        margin: 8px 0 20px 0;
+        height: 92px;
+    }
+
+    @media screen and (min-width: 768px) {
+        margin: 22px 0 48px 0;
+        padding-left: 5em;
+        height: 88px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        padding-left: 15em;
+        margin: 42px 0;
+        height: 64px;
+    }
+}
+
+.space {
+    margin: 0 5px;
+}

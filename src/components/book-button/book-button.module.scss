@@ -1,0 +1,26 @@
+.button {
+    border-radius: 20px;
+    margin: 0 auto;
+    height: 40px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    width: 100%;
+}
+
+.disabledButton {
+    @extend .button;
+    pointer-events: none;
+    background: #F9F9FA;
+    border: 1px solid #BFC4C9;
+    color: #a7a7a7;
+}
+
+.enabledButton {
+    @extend .button;
+    background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+    border: none;
+    color: #FFFFFF;
+}

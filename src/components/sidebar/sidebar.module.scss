@@ -1,0 +1,122 @@
+.navMenu {
+    @media screen and (min-width: 1440px) {
+        display: block;
+        width: 279px;
+    }
+}
+
+.navItem {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    cursor: pointer;
+    width: 255px;
+
+    @media screen and (min-width: 320px) {
+        margin-left: 16px;
+    }
+
+    @media screen and (min-width: 768px) {
+        margin-left: 32px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        margin-left: 0;
+    }
+}
+
+.navItemActive {
+    @extend .navItem;
+    @extend .activeItem;
+    border-bottom: 1px solid #F83600;
+    padding-bottom: 8px;
+}
+
+.booksCategories {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 32px;
+    font-size: 16px;
+    line-height: 24px;
+
+    @media screen and (min-width: 320px) {
+        padding-left: 36px;
+    }
+
+    @media screen and (min-width: 768px) {
+        padding-left: 52px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        padding-left: 20px;
+    }
+}
+
+.categoryCount {
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+    color: #A7A7A7;
+    padding-left: 6px;
+}
+
+.activeItem :not(.categoryCount) {
+    background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+    font-weight: 700;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.menuAuthContainer {
+    @media screen and (min-width: 320px) {
+        border-top: 1px solid #BFC4C9;
+        padding-top: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
+    }
+
+    @media screen and (min-width: 1440px) {
+        display: none;
+    }
+}
+
+.listItemsStyle {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+    margin-bottom: 0;
+}
+
+.showcaseIcon {
+    transform: rotate(180deg);
+}
+
+.showcaseIconActive {
+    transform: none;
+}
+
+.arrowIconBlock {
+    display: flex;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+}
+
+.toggleShowcaseButton {
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    width: 255px;
+    cursor: pointer;
+    width: 255px;
+    padding-bottom: 8px;
+}
+
+.hideElement {
+    display: none;
+}

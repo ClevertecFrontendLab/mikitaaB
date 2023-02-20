@@ -1,0 +1,1 @@
+export { BookDetailsInfo } from './book-details-info';
