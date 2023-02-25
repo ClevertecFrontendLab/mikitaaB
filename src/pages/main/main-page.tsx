@@ -11,16 +11,14 @@ import { getBooksThunk } from '../../store/slices/books-slice';
 
 import s from './main-page.module.scss';
 import { getCategoriesThunk } from '../../store/slices/categories-slice';
-import { BooksStateType, CategoriesStateType, CategoryType } from '../../types';
+import { BooksStateType } from '../../types';
 
 export const MainPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [isListView, setIsListView] = useState(false);
     const onSwitchViewOption = () => setIsListView(!isListView);
 
-	const getCategories = (state: RootStore): CategoriesStateType => state.category;
-	const categories = useSelector<RootStore, CategoryType[]>((state: RootStore) => getCategories(state).categories);
-    const booksData = useSelector<RootStore, BooksStateType>((state: RootStore) => state.books);
+	const booksData = useSelector<RootStore, BooksStateType>((state: RootStore) => state.books);
     const booksStatusLoading = booksData.status;
 
     useEffect(() => {
@@ -39,7 +37,7 @@ export const MainPage = () => {
     return (
         <section className={s.mainPage}>
             <NavigationList isListView={isListView} switchViewOption={onSwitchViewOption} />
-            <BooksContent isListView={isListView} categories={categories} booksData={booksData.books} />
+            <BooksContent isListView={isListView} />
         </section>
     )
 };

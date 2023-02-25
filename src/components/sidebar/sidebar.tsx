@@ -8,7 +8,8 @@ import menuArrowIcon from '../../assets/icon/menuArrowIcon.png';
 import s from './sidebar.module.scss';
 import { AppDispatch, RootStore } from '../../store/store';
 import { getCategoriesThunk } from '../../store/slices/categories-slice';
-import { CategoriesStateType, CategoryType } from '../../types';
+import { BooksStateType, CategoriesStateType } from '../../types';
+import { categoryAllBooks } from '../../constants';
 
 type SidebarPropsType = {
 	isMenuOpen?: boolean,
@@ -31,9 +32,9 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 		closeMenuHandler?.();
 	}
 
-	const categoriesData = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
-	const booksCategoryItems = categoriesData.categories;
-	const categoriesLoadStatus = categoriesData.status;
+	const { books } = useSelector<RootStore, BooksStateType>((state: RootStore) => state.books);
+	const { categories: booksCategoryItems, status: categoriesLoadStatus } =
+		useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
 	const isLoadResolved = categoriesLoadStatus === 'resolved';
 
 	useEffect(() => {
@@ -82,18 +83,23 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 						<ul className={bookCategoriesStyle}>
 							<NavLink to='/books/all' className={menuItemActive} onClick={onClickMenuItem}
 								data-test-id='burger-books'>
-								<span>Все книги</span>
+								<span>{categoryAllBooks}</span>
 							</NavLink>
 							{
-								booksCategoryItems.map(el => (
-									<li key={el.id}>
-										<NavLink to={`books/${el.path}`} className={menuItemActive} onClick={onClickMenuItem}
-											data-test-id='navigation-books'>
-											<span>{el.name}</span>
-											<span className={s.categoryCount}>{el.count}</span>
-										</NavLink>
-									</li>
-								))
+								booksCategoryItems.map(el => {
+									const booksCount = books.filter(book => book.categories.includes(el.name)).length;
+
+									return (
+										<li key={el.id}>
+											<NavLink to={`books/${el.path}`} className={menuItemActive}
+												onClick={onClickMenuItem}
+												data-test-id='navigation-books'>
+												<span>{el.name}</span>
+												<span className={s.categoryCount}>{booksCount}</span>
+											</NavLink>
+										</li>
+									)
+								})
 							}
 						</ul>
 					}
