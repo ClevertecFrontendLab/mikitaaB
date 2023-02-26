@@ -95,3 +95,7 @@ export type BookDetailStateType = {
     book: BookDetailType | null,
     status: StatusType
 }
+
+export type SortStateType = {
+    sortOptionAsc: boolean
+}
