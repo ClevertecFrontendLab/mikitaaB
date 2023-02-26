@@ -1,9 +1,10 @@
 import classnames from 'classnames';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
-import searchIcon from '../../assets/icon/searchIcon.png';
 import resetSearch from '../../assets/icon/resetSearch.png';
+import { ReactComponent as SearchIcon } from '../../assets/icon/searchIcon.svg';
 
+import { useSearch } from '../../hooks/use-search';
 import s from './search-input.module.scss';
 
 type SearchInputPropsType = {
@@ -12,12 +13,19 @@ type SearchInputPropsType = {
 }
 
 export const SearchInput: FC<SearchInputPropsType> = ({ isSearchOpen, handleClick }) => {
+    const { searchValue, setSearchInputValue } = useSearch();
+    const [isActiveSearchInput, setIsActiveSearchInput] = useState(false);
+
     const onClickHandler = () => {
         handleClick();
+        setIsActiveSearchInput(prevState => !prevState);
     }
+    const onBlurSearchInput = () => setIsActiveSearchInput(prevState => !prevState);
+    const onFocusSearchInput = () => setIsActiveSearchInput(true);
     const searchIconStyle = classnames({
         [s.searchIcon]: true,
-        [s.hideElement]: isSearchOpen
+        [s.hideElement]: isSearchOpen,
+        [s.searchIconActive]: isActiveSearchInput
     });
     const searchBarStyle = classnames({
         [s.searchBar]: true,
@@ -32,11 +40,16 @@ export const SearchInput: FC<SearchInputPropsType> = ({ isSearchOpen, handleClic
         <div className={searchBarStyle} role='presentation'>
             <button type='button' data-test-id='button-search-open'
                 onClick={onClickHandler} className={searchIconStyle}>
-                <img src={searchIcon} alt='searchIcon' />
+                <SearchIcon />
             </button>
-            <input className={s.searchInput} placeholder='Поиск книги или автора ...'
+            <input className={s.searchInput}
+                onBlur={onBlurSearchInput}
+                onChange={setSearchInputValue}
+                onFocus={onFocusSearchInput}
+                placeholder='Поиск книги или автора…'
+                value={searchValue}
                 data-test-id='input-search' />
-            <button type='button' data-test-id='input-search'
+            <button type='button'
                 onClick={onClickHandler} className={resetSearchStyle}>
                 <img src={resetSearch} alt='reset-search' data-test-id='button-search-close' />
             </button>

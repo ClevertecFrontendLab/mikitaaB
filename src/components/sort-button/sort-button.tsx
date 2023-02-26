@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import sortIconAsc from '../../assets/icon/sortIconAsc.png';
 import sortIconDesc from '../../assets/icon/sortIconDesc.png';
 
-import { setSortOptionAsc } from '../../store/slices/sort-slice';
+import { setSortOptionAsc } from '../../store/slices/sort-search-slice';
 import s from './sort-button.module.scss';
 
 type SortButtonPropsType = {
@@ -28,7 +28,8 @@ export const SortButton: FC<SortButtonPropsType> = ({ isSearchOpen }) => {
     };
 
     return (
-        <button className={sortButtonStyle} onClick={onClickSortRating} type='button'>
+        <button className={sortButtonStyle} onClick={onClickSortRating}
+            data-test-id='sort-rating-button' type='button'>
             <img src={sortIconSrc} className={s.sortIcon} alt='sortIcon' />
             <span className={s.sortOption}>По рейтингу</span>
         </button>

@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { SortStateType } from '../../types';
 
 const initialState: SortStateType = {
-    sortOptionAsc: true
+    sortOptionAsc: true,
+    searchValue: ''
 }
 
 const sortSlice = createSlice({
@@ -13,9 +14,12 @@ const sortSlice = createSlice({
     reducers: {
         setSortOptionAsc: (state) => {
             state.sortOptionAsc = !state.sortOptionAsc;
+        },
+        setSearchValue: (state, action) => {
+            state.searchValue = action.payload;
         }
     }
 });
 
-export const { setSortOptionAsc } = sortSlice.actions;
+export const { setSortOptionAsc, setSearchValue } = sortSlice.actions;
 export const { reducer } = sortSlice;

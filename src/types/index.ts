@@ -97,5 +97,6 @@ export type BookDetailStateType = {
 }
 
 export type SortStateType = {
-    sortOptionAsc: boolean
+    sortOptionAsc: boolean,
+    searchValue: string
 }

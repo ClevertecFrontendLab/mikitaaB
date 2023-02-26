@@ -82,7 +82,7 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 						isLoadResolved &&
 						<ul className={bookCategoriesStyle}>
 							<NavLink to='/books/all' className={menuItemActive} onClick={onClickMenuItem}
-								data-test-id='burger-books'>
+								data-test-id={isMenuOpen ? 'burger-books' : 'navigation-books'}>
 								<span>{categoryAllBooks}</span>
 							</NavLink>
 							{
@@ -93,10 +93,13 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 										<li key={el.id}>
 											<NavLink to={`books/${el.path}`} className={menuItemActive}
 												onClick={onClickMenuItem}
-												data-test-id='navigation-books'>
+												data-test-id={isMenuOpen ? `burger-${el.path}` : `navigation-${el.path}`}>
 												<span>{el.name}</span>
-												<span className={s.categoryCount}>{booksCount}</span>
 											</NavLink>
+											<span className={s.categoryCount}
+												data-test-id={isMenuOpen ? `burger-book-count-for-${el.path}` : `navigation-book-count-for-${el.path}`}>
+												{booksCount}
+											</span>
 										</li>
 									)
 								})
