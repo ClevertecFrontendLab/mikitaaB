@@ -29,7 +29,7 @@ export const MenuBlock: FC<MenuBlockPropsType> = ({ isMenuOpen, burgerMenuBtnRef
         <div
             className={s.menuBlock}
             ref={navRef}
-            data-test-id="burger-navigation">
+            data-test-id='burger-navigation'>
             <Sidebar isMenuOpen={isMenuOpen} closeMenuHandler={closeMenuHandler} />
         </div>
     )

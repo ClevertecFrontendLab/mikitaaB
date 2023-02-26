@@ -8,6 +8,7 @@ import { RatingInfo } from '../rating-info';
 import noBookImage from '../../assets/image/noBookImage.png';
 import { BookingType, DeliveryType, ImageType } from '../../types';
 import { host } from '../../constants';
+import { HighlightText } from '../highlight-text';
 
 type CardPropsType = {
     authors: string[],
@@ -40,7 +41,9 @@ export const Card: FC<CardPropsType> = (props) => {
                             <span className={s.noRating}>ещё нет оценок</span>
                     }
                 </div>
-                <div className={s.bookTitle}>{title}</div>
+                <div className={s.bookTitle}>
+                    <HighlightText title={title} />
+                </div>
                 <div className={s.authorYear}>{authorYear}</div>
                 <div className={s.bookButton}>
                     <BookButton booking={booking} delivery={delivery} />

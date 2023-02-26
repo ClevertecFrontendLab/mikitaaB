@@ -16,7 +16,7 @@ export const RatingInfo: FC<RatingInfoType> = ({ rating }) => {
     for (let i = 0; i < maxStars; i++) {
         const starIcon = i < rating ? fillStarIcon : emptyStarIcon;
         const alt = `star${i}`;
-        const star = <img key={i} src={starIcon} alt={alt} className="star" />
+        const star = <img key={i} src={starIcon} alt={alt} className='star' />
 
         starsRes.push(<div key={i}>{star}</div>);
     }
