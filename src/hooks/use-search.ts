@@ -2,11 +2,11 @@ import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue } from '../store/slices/sort-search-slice';
 
-import { RootStore } from '../store/store';
+import { AppDispatch, RootStore } from '../store/store';
 import { SortStateType } from '../types';
 
 export const useSearch = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { searchValue } = useSelector<RootStore, SortStateType>((state: RootStore) => state.sortSearch);
 
     const setSearchInputValue = (event: ChangeEvent<HTMLInputElement>) => {

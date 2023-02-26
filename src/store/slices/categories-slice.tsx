@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { apiCategoriesEndpoint } from '../../constants';
+import { apiCategoriesEndpoint, categoryAllBooks } from '../../constants';
 import { CategoriesStateType, CategoryType } from '../../types';
 
 export const getCategoriesThunk = createAsyncThunk(
@@ -15,18 +15,23 @@ export const getCategoriesThunk = createAsyncThunk(
 
 const initialState: CategoriesStateType = {
     categories: [],
+    currentCategory: categoryAllBooks,
     status: 'idle'
 }
 
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
-    reducers: {},
+    reducers: {
+        setCurrentCategory: (state, action: PayloadAction<string | undefined>) => {
+            state.currentCategory = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getCategoriesThunk.pending, (state) => {
             state.status = 'loading';
         });
-        builder.addCase(getCategoriesThunk.fulfilled, (state, action) => {
+        builder.addCase(getCategoriesThunk.fulfilled, (state, action: PayloadAction<CategoryType[]>) => {
             state.categories = action.payload
             state.status = 'resolved';
         });
@@ -37,4 +42,5 @@ const categoriesSlice = createSlice({
     }
 });
 
+export const { setCurrentCategory } = categoriesSlice.actions;
 export const { reducer } = categoriesSlice;

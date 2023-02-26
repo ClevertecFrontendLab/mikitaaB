@@ -9,6 +9,7 @@ export type CategoryType = {
 
 export type CategoriesStateType = {
     categories: CategoryType[],
+    currentCategory: string | undefined,
     status: StatusType
 }
 

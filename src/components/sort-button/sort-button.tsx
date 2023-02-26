@@ -8,13 +8,14 @@ import sortIconDesc from '../../assets/icon/sortIconDesc.png';
 
 import { setSortOptionAsc } from '../../store/slices/sort-search-slice';
 import s from './sort-button.module.scss';
+import { AppDispatch } from '../../store/store';
 
 type SortButtonPropsType = {
     isSearchOpen: boolean
 }
 
 export const SortButton: FC<SortButtonPropsType> = ({ isSearchOpen }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const sortButtonStyle = classnames({
         [s.sortButton]: true,
         [s.hideSortButton]: isSearchOpen

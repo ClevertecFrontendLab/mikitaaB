@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { BookDetailsInfo } from '../../components/book-details-info';
@@ -7,32 +7,32 @@ import { BookReviewInfo } from '../../components/book-review-info';
 import { Breadcrumbs } from '../../components/breadcrumbs';
 import { RatingInfo } from '../../components/rating-info';
 
-import { AppDispatch, RootStore } from '../../store/store';
-import { BookDetailStateType, BookDetailType, CategoriesStateType, CategoryType, StatusType } from '../../types';
-import { getBookThunk } from '../../store/slices/book-slice';
 import { Error } from '../../components/error';
 import { Loader } from '../../components/loader';
+import { getBookThunk } from '../../store/slices/book-slice';
+import { AppDispatch, RootStore } from '../../store/store';
+import { BookDetailStateType, BookDetailType, StatusType } from '../../types';
 
 import s from './book-page.module.scss';
-import { getCategoriesThunk } from '../../store/slices/categories-slice';
 
 export const BookPage: FC = () => {
-    const { bookId } = useParams();
+    const { category, bookId } = useParams();
     const dispatch = useDispatch<AppDispatch>();
     const bookDetailData = useSelector<RootStore, BookDetailStateType>((state: RootStore) => state.book);
     const bookData: BookDetailType | null = bookDetailData.book;
     const bookStatusLoading: StatusType = bookDetailData.status;
+    const bookIdNum = Number(bookId);
 
     useEffect(() => {
-        dispatch(getBookThunk((Number(bookId))));
-    }, [bookId, dispatch]);
+        dispatch(getBookThunk((bookIdNum)));
+    }, [bookIdNum, dispatch]);
 
     const isBookLoadFailed = !bookStatusLoading || bookStatusLoading === 'failed';
     const isBookLoading = bookStatusLoading === 'loading';
 
     return (
         <section className={s.bookPage}>
-            <Breadcrumbs />
+            <Breadcrumbs categoryPath={category} bookId={bookIdNum} bookTitle={bookData?.title} />
             { isBookLoadFailed && <div className={s.errorContainer}><Error /></div> }
             { isBookLoading && <Loader /> }
             {
@@ -47,10 +47,10 @@ export const BookPage: FC = () => {
                                 <div className={s.starValueRating}>
                                     {
                                         bookData.rating ?
-                                            <>
+                                            <Fragment>
                                                 <RatingInfo rating={bookData.rating} />
                                                 <span className={s.ratingValue}>{bookData.rating}</span>
-                                            </> :
+                                            </Fragment> :
                                             <span className={s.noRating}>ещё нет оценок</span>
                                     }
                                 </div>

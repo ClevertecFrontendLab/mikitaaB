@@ -10,7 +10,6 @@ import { AppDispatch, RootStore } from '../../store/store';
 import { getBooksThunk } from '../../store/slices/books-slice';
 
 import s from './main-page.module.scss';
-import { getCategoriesThunk } from '../../store/slices/categories-slice';
 import { BooksStateType } from '../../types';
 
 export const MainPage = () => {
@@ -23,7 +22,6 @@ export const MainPage = () => {
 
     useEffect(() => {
         dispatch(getBooksThunk());
-		dispatch(getCategoriesThunk());
     }, [dispatch]);
 
     if (!booksStatusLoading || booksStatusLoading === 'failed') {

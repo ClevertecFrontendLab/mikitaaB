@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import s from './books-content.module.scss';
 
-import { RootStore } from '../../store/store';
+import { AppDispatch, RootStore } from '../../store/store';
 import { BooksStateType, CategoriesStateType, CategoryType, SortStateType } from '../../types';
 import { Card } from '../card';
+import { setCurrentCategory } from '../../store/slices/categories-slice';
 
 type BooksContentPropsType = {
     isListView: boolean
@@ -28,6 +29,12 @@ const sortNullValue = (rateValue: number | null) => rateValue === null ? 0 : rat
 
 export const BooksContent: FC<BooksContentPropsType> = ({ isListView }) => {
     const contentContainer = isListView ? s.listContainer : s.gridContainer;
+
+    const { category } = useParams();
+    const dispatch = useDispatch<AppDispatch>();
+    const onClickBookCard = () => {
+        dispatch(setCurrentCategory(category));
+    }
 
     const { books: booksData } = useSelector<RootStore, BooksStateType>((state: RootStore) => state.books);
     const { categories: categoriesData } = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
@@ -52,27 +59,24 @@ export const BooksContent: FC<BooksContentPropsType> = ({ isListView }) => {
                     booksDataFilterByTitle.length === 0 ? (
                         <NoBookByTitle />
                     ) : (
-                        booksDataFilterByTitle.map(book => {
-                            const bookCategory = categoriesData.find((category: CategoryType) =>
-                                book.categories.some(bookCat => category.name.toLowerCase() === bookCat.toLowerCase()))?.path;
-
-                            return (
-                                <Link key={book.id} to={`/books/${bookCategory}/${book.id}`}>
-                                    <Card
-                                        key={book.id}
-                                        authors={book.authors}
-                                        title={book.title}
-                                        booking={book.booking}
-                                        image={book.image}
-                                        delivery={book.delivery}
-                                        isListView={isListView}
-                                        rating={book.rating}
-                                        issueYear={book.issueYear}
-                                    />
-                                </Link>
-                            )
-                        })
+                        booksDataFilterByTitle.map(book => (
+                            <Link key={book.id} to={`/books/${category}/${book.id}`}
+                                onClick={onClickBookCard}>
+                                <Card
+                                    key={book.id}
+                                    authors={book.authors}
+                                    title={book.title}
+                                    booking={book.booking}
+                                    image={book.image}
+                                    delivery={book.delivery}
+                                    isListView={isListView}
+                                    rating={book.rating}
+                                    issueYear={book.issueYear}
+                                />
+                            </Link>
+                        )
                     )
+                )
             }
         </div>
     )

@@ -35,7 +35,9 @@ export const BookGeneralInfo: FC<BookGeneralInfoType> = (props) => {
                 }
             </div>
             <div className={s.generalInfo}>
-                <div className={s.bookGeneralInfoTitle}>{title}</div>
+                <div className={s.bookGeneralInfoTitle} data-test-id='book-title'>
+                    {title}
+                </div>
                 <div className={s.authorYearInfo}>{authorYear}</div>
                 <div className={s.bookButton}>
                     <BookButton booking={booking} delivery={delivery} />
