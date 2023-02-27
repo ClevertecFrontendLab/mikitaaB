@@ -22,9 +22,7 @@
 }
 
 .emptyResult {
-    font-size: 32px;
     font-weight: 700;
-    line-height: 40px;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -33,7 +31,11 @@
     @media screen and (min-width: 320px) {
         font-size: 18px;
         line-height: 28px;
-        text-align: center;
+    }
+
+    @media screen and (min-width: 768px) {
+        font-size: 32px;
+        line-height: 40px;
     }
 }
 
