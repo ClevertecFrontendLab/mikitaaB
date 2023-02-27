@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiBooksEndpoint } from '../../constants';
 
@@ -26,7 +26,7 @@ const bookSlice = createSlice({
         builder.addCase(getBookThunk.pending, (state) => {
             state.status = 'loading';
         });
-        builder.addCase(getBookThunk.fulfilled, (state, action) => {
+        builder.addCase(getBookThunk.fulfilled, (state, action: PayloadAction<BookDetailType>) => {
             state.book = action.payload;
             state.status = 'resolved';
         });

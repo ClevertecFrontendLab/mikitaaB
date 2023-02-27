@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import s from './card.module.scss';
 
@@ -8,6 +8,7 @@ import { RatingInfo } from '../rating-info';
 import noBookImage from '../../assets/image/noBookImage.png';
 import { BookingType, DeliveryType, ImageType } from '../../types';
 import { host } from '../../constants';
+import { HighlightText } from '../highlight-text';
 
 type CardPropsType = {
     authors: string[],
@@ -20,7 +21,7 @@ type CardPropsType = {
     issueYear: string
 }
 
-export const Card: FC<CardPropsType> = (props) => {
+export const Card: FC<CardPropsType> = memo((props) => {
     const { authors, title, booking, image, delivery, isListView, rating, issueYear } = props;
     const authorStr = authors ? `${authors}, ` : '';
     const authorYear = `${authorStr}${issueYear}`;
@@ -40,7 +41,9 @@ export const Card: FC<CardPropsType> = (props) => {
                             <span className={s.noRating}>ещё нет оценок</span>
                     }
                 </div>
-                <div className={s.bookTitle}>{title}</div>
+                <div className={s.bookTitle}>
+                    <HighlightText title={title} />
+                </div>
                 <div className={s.authorYear}>{authorYear}</div>
                 <div className={s.bookButton}>
                     <BookButton booking={booking} delivery={delivery} />
@@ -48,4 +51,4 @@ export const Card: FC<CardPropsType> = (props) => {
             </div>
         </div>
     );
-};
+})

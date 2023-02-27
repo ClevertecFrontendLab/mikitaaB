@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { BookingType, DeliveryType } from '../../types';
 
 import s from './book-button.module.scss';
@@ -8,7 +8,7 @@ type BookButtonType = {
     delivery: DeliveryType | null
 }
 
-export const BookButton: FC<BookButtonType> = ({ booking, delivery }) => {
+export const BookButton: FC<BookButtonType> = memo(({ booking, delivery }) => {
     let buttonText;
     let buttonClassName = s.disabledButton;
 
@@ -31,4 +31,4 @@ export const BookButton: FC<BookButtonType> = ({ booking, delivery }) => {
     }
 
     return <button type='button' className={buttonClassName}>{buttonText}</button>;
-};
+});

@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, useEffect } from 'react';
+import { FC, useState, MouseEvent, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import classnames from 'classnames';
@@ -8,7 +8,8 @@ import menuArrowIcon from '../../assets/icon/menuArrowIcon.png';
 import s from './sidebar.module.scss';
 import { AppDispatch, RootStore } from '../../store/store';
 import { getCategoriesThunk } from '../../store/slices/categories-slice';
-import { CategoriesStateType, CategoryType } from '../../types';
+import { BooksStateType, CategoriesStateType } from '../../types';
+import { categoryAllBooks } from '../../constants';
 
 type SidebarPropsType = {
 	isMenuOpen?: boolean,
@@ -20,7 +21,7 @@ type NavLinkProps = {
 }
 type PathTypes = '/books' | '/terms' | '/contract' | '/profile';
 
-export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) => {
+export const Sidebar: FC<SidebarPropsType> = memo(({ isMenuOpen, closeMenuHandler }) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const [isShowcaseOpen, setIsShowcaseOpen] = useState(true);
@@ -31,14 +32,16 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 		closeMenuHandler?.();
 	}
 
-	const categoriesData = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
-	const booksCategoryItems = categoriesData.categories;
-	const categoriesLoadStatus = categoriesData.status;
+	const { books } = useSelector<RootStore, BooksStateType>((state: RootStore) => state.books);
+	const { categories: booksCategoryItems, status: categoriesLoadStatus } =
+		useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
 	const isLoadResolved = categoriesLoadStatus === 'resolved';
 
 	useEffect(() => {
-		dispatch(getCategoriesThunk());
-	}, [dispatch]);
+		if (booksCategoryItems.length === 0) {
+			dispatch(getCategoriesThunk());
+		}
+	}, [dispatch, booksCategoryItems]);
 
 	useEffect(() => {
 		if (location.pathname !== '/' && !category) {
@@ -81,19 +84,27 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 						isLoadResolved &&
 						<ul className={bookCategoriesStyle}>
 							<NavLink to='/books/all' className={menuItemActive} onClick={onClickMenuItem}
-								data-test-id='burger-books'>
-								<span>Все книги</span>
+								data-test-id={isMenuOpen ? 'burger-books' : 'navigation-books'}>
+								<span>{categoryAllBooks}</span>
 							</NavLink>
 							{
-								booksCategoryItems.map(el => (
-									<li key={el.id}>
-										<NavLink to={`books/${el.path}`} className={menuItemActive} onClick={onClickMenuItem}
-											data-test-id='navigation-books'>
-											<span>{el.name}</span>
-											<span className={s.categoryCount}>{el.count}</span>
-										</NavLink>
-									</li>
-								))
+								booksCategoryItems.map(el => {
+									const booksCount = books.filter(book => book.categories.includes(el.name)).length;
+
+									return (
+										<li key={el.id}>
+											<NavLink to={`books/${el.path}`} className={menuItemActive}
+												onClick={onClickMenuItem}
+												data-test-id={isMenuOpen ? `burger-${el.path}` : `navigation-${el.path}`}>
+												<span>{el.name}</span>
+											</NavLink>
+											<span className={s.categoryCount}
+												data-test-id={isMenuOpen ? `burger-book-count-for-${el.path}` : `navigation-book-count-for-${el.path}`}>
+												{booksCount}
+											</span>
+										</li>
+									)
+								})
 							}
 						</ul>
 					}
@@ -127,4 +138,4 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 			</nav>
 		</aside >
 	);
-};
+});

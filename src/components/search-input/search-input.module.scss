@@ -39,8 +39,15 @@
     }
 }
 
+.searchIconActive {
+    svg path {
+        fill: rgb(248, 54, 0);
+    }
+}
+
 .searchInput {
     display: none;
+    caret-color: rgb(248, 54, 0);
 
     @media screen and (min-width: 768px) {
         width: 100%;

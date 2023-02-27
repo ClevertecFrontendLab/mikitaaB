@@ -9,6 +9,7 @@ export type CategoryType = {
 
 export type CategoriesStateType = {
     categories: CategoryType[],
+    currentCategory: string | undefined,
     status: StatusType
 }
 
@@ -94,4 +95,9 @@ export type BooksStateType = {
 export type BookDetailStateType = {
     book: BookDetailType | null,
     status: StatusType
+}
+
+export type SortStateType = {
+    sortOptionAsc: boolean,
+    searchValue: string
 }

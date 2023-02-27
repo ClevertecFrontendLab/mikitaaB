@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { ReactComponent as ListViewIcon } from '../../../assets/icon/listViewIcon.svg';
 
@@ -9,7 +9,7 @@ type ListViewButtonPropsType = {
     clickCallback: () => void
 }
 
-export const ListViewButton: FC<ListViewButtonPropsType> = ({ isListView, clickCallback }) => {
+export const ListViewButton: FC<ListViewButtonPropsType> = memo(({ isListView, clickCallback }) => {
     const onClickListView = () => clickCallback();
     const listViewButtonClassName = isListView ? s.listViewActive : s.listView;
 
@@ -22,4 +22,4 @@ export const ListViewButton: FC<ListViewButtonPropsType> = ({ isListView, clickC
             <ListViewIcon />
         </button>
     )
-}
+});
