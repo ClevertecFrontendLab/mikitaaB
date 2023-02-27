@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { ReactComponent as GridViewIcon } from '../../../assets/icon/gridViewIcon.svg';
 
@@ -9,7 +9,7 @@ type GridViewButtonPropsType = {
     clickCallback: () => void
 }
 
-export const GridViewButton: FC<GridViewButtonPropsType> = ({ isListView, clickCallback }) => {
+export const GridViewButton: FC<GridViewButtonPropsType> = memo(({ isListView, clickCallback }) => {
     const onClickGridView = () => clickCallback();
     const gridViewButtonClassName = isListView ? s.gridView : s.gridViewActive;
 
@@ -22,4 +22,4 @@ export const GridViewButton: FC<GridViewButtonPropsType> = ({ isListView, clickC
             <GridViewIcon />
         </button>
     )
-}
+})

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
@@ -13,17 +13,17 @@ type BooksContentPropsType = {
     isListView: boolean
 }
 
-const NoBookByCategory = () => (
+const NoBookByCategory = memo(() => (
     <div className={s.emptyResultContainer}>
         <span className={s.emptyResult} data-test-id='empty-category'>В этой категории книг ещё нет</span>
     </div>
-)
+))
 
-const NoBookByTitle = () => (
+const NoBookByTitle = memo(() => (
     <div className={s.emptyResultContainer}>
         <span className={s.emptyResult} data-test-id='search-result-not-found'>По запросу ничего не найдено</span>
     </div>
-)
+))
 
 const sortNullValue = (rateValue: number | null) => rateValue === null ? 0 : rateValue;
 
@@ -63,7 +63,6 @@ export const BooksContent: FC<BooksContentPropsType> = ({ isListView }) => {
                             <Link key={book.id} to={`/books/${category}/${book.id}`}
                                 onClick={onClickBookCard}>
                                 <Card
-                                    key={book.id}
                                     authors={book.authors}
                                     title={book.title}
                                     booking={book.booking}
@@ -75,8 +74,8 @@ export const BooksContent: FC<BooksContentPropsType> = ({ isListView }) => {
                                 />
                             </Link>
                         )
+                        )
                     )
-                )
             }
         </div>
     )

@@ -24,16 +24,13 @@ export const MainPage = () => {
         dispatch(getBooksThunk());
     }, [dispatch]);
 
-    if (!booksStatusLoading || booksStatusLoading === 'failed') {
-        return <Error />
-    }
-
-    if (booksStatusLoading === 'loading') {
-        return <Loader />
-    }
+    const isBookLoadFailed = !booksStatusLoading || booksStatusLoading === 'failed';
+    const isBookLoading = booksStatusLoading === 'loading';
 
     return (
         <section className={s.mainPage}>
+            { isBookLoadFailed && <div className={s.errorContainer}><Error /></div> }
+            { isBookLoading && <Loader /> }
             <NavigationList isListView={isListView} switchViewOption={onSwitchViewOption} />
             <BooksContent isListView={isListView} />
         </section>

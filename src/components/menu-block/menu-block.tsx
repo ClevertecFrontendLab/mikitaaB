@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, memo, useEffect, useRef } from 'react';
 import { Sidebar } from '../sidebar';
 
 import s from './menu-block.module.scss';
@@ -9,7 +9,7 @@ type MenuBlockPropsType = {
     closeMenuHandler: () => void
 }
 
-export const MenuBlock: FC<MenuBlockPropsType> = ({ isMenuOpen, burgerMenuBtnRef, closeMenuHandler }) => {
+export const MenuBlock: FC<MenuBlockPropsType> = memo(({ isMenuOpen, burgerMenuBtnRef, closeMenuHandler }) => {
     const navRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -33,4 +33,4 @@ export const MenuBlock: FC<MenuBlockPropsType> = ({ isMenuOpen, burgerMenuBtnRef
             <Sidebar isMenuOpen={isMenuOpen} closeMenuHandler={closeMenuHandler} />
         </div>
     )
-}
+})

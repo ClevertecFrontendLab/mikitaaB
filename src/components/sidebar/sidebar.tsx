@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, useEffect } from 'react';
+import { FC, useState, MouseEvent, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import classnames from 'classnames';
@@ -21,7 +21,7 @@ type NavLinkProps = {
 }
 type PathTypes = '/books' | '/terms' | '/contract' | '/profile';
 
-export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) => {
+export const Sidebar: FC<SidebarPropsType> = memo(({ isMenuOpen, closeMenuHandler }) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const [isShowcaseOpen, setIsShowcaseOpen] = useState(true);
@@ -38,8 +38,10 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 	const isLoadResolved = categoriesLoadStatus === 'resolved';
 
 	useEffect(() => {
-		dispatch(getCategoriesThunk());
-	}, [dispatch]);
+		if (booksCategoryItems.length === 0) {
+			dispatch(getCategoriesThunk());
+		}
+	}, [dispatch, booksCategoryItems]);
 
 	useEffect(() => {
 		if (location.pathname !== '/' && !category) {
@@ -136,4 +138,4 @@ export const Sidebar: FC<SidebarPropsType> = ({ isMenuOpen, closeMenuHandler }) 
 			</nav>
 		</aside >
 	);
-};
+});

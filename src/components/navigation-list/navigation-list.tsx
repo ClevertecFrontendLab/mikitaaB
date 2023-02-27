@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import classnames from 'classnames';
 
 import { GridViewButton } from '../view-buttons/grid-view-button';
@@ -13,7 +13,7 @@ type NavigationListPropsType = {
     switchViewOption: () => void
 }
 
-export const NavigationList: FC<NavigationListPropsType> = ({ isListView, switchViewOption }) => {
+export const NavigationList: FC<NavigationListPropsType> = memo(({ isListView, switchViewOption }) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const switchViewStyle = classnames({
 		[s.switchView]: true,
@@ -37,4 +37,4 @@ export const NavigationList: FC<NavigationListPropsType> = ({ isListView, switch
             </div>
         </div>
     )
-}
+})

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import s from './card.module.scss';
 
@@ -21,7 +21,7 @@ type CardPropsType = {
     issueYear: string
 }
 
-export const Card: FC<CardPropsType> = (props) => {
+export const Card: FC<CardPropsType> = memo((props) => {
     const { authors, title, booking, image, delivery, isListView, rating, issueYear } = props;
     const authorStr = authors ? `${authors}, ` : '';
     const authorYear = `${authorStr}${issueYear}`;
@@ -51,4 +51,4 @@ export const Card: FC<CardPropsType> = (props) => {
             </div>
         </div>
     );
-};
+})

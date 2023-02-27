@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import s from './rating-info.module.scss';
 
@@ -9,7 +9,7 @@ type RatingInfoType = {
     rating: number
 }
 
-export const RatingInfo: FC<RatingInfoType> = ({ rating }) => {
+export const RatingInfo: FC<RatingInfoType> = memo(({ rating }) => {
     const starsRes = [];
     const maxStars = 5;
 
@@ -22,4 +22,4 @@ export const RatingInfo: FC<RatingInfoType> = ({ rating }) => {
     }
 
     return <div className={s.ratingInfo}>{starsRes}</div>;
-};
+});

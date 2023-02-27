@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import classnames from 'classnames';
@@ -14,7 +14,7 @@ type SortButtonPropsType = {
     isSearchOpen: boolean
 }
 
-export const SortButton: FC<SortButtonPropsType> = ({ isSearchOpen }) => {
+export const SortButton: FC<SortButtonPropsType> = memo(({ isSearchOpen }) => {
     const dispatch = useDispatch<AppDispatch>();
     const sortButtonStyle = classnames({
         [s.sortButton]: true,
@@ -35,4 +35,4 @@ export const SortButton: FC<SortButtonPropsType> = ({ isSearchOpen }) => {
             <span className={s.sortOption}>По рейтингу</span>
         </button>
     )
-}
+})

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useSearch } from '../../hooks/use-search';
 
 import s from './highlight-text.module.scss';
@@ -7,7 +7,7 @@ type HighlightTextPropsType = {
     title: string
 }
 
-export const HighlightText: FC<HighlightTextPropsType> = ({ title }) => {
+export const HighlightText: FC<HighlightTextPropsType> = memo(({ title }) => {
     const { searchValue } = useSearch();
     const searchIndex: number = title.toLowerCase().indexOf(searchValue.toLowerCase());
     const bookTitle = [
@@ -19,4 +19,4 @@ export const HighlightText: FC<HighlightTextPropsType> = ({ title }) => {
     ];
 
     return <span>{bookTitle}</span>
-}
+})

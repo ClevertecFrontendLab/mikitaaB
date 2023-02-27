@@ -19,9 +19,7 @@ export const Breadcrumbs: FC<BreadcrumbsPropsType> = (props) => {
     const { categoryPath, bookId, bookTitle } = props;
     const dispatch = useDispatch<AppDispatch>();
     const { currentCategory } = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
-    const onNavToCategory = () => {
-        dispatch(getBooksThunk());
-    }
+
     const delimiter = ' / ';
 	const { categories: categoriesData } = useSelector<RootStore, CategoriesStateType>((state: RootStore) => state.category);
 
@@ -31,7 +29,7 @@ export const Breadcrumbs: FC<BreadcrumbsPropsType> = (props) => {
     return (
         <div className={s.breadcrumbsContainer}>
             <Link to={`/books/${currentCategory}`} data-test-id='breadcrumbs-link'
-                className={s.linkStyle} onClick={onNavToCategory}>
+                className={s.linkStyle}>
                 {categoryName}
             </Link>
             <span className={s.space}>{delimiter}</span>

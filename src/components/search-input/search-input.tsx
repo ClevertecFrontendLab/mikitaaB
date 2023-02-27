@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 
 import resetSearch from '../../assets/icon/resetSearch.png';
 import { ReactComponent as SearchIcon } from '../../assets/icon/searchIcon.svg';
@@ -12,7 +12,7 @@ type SearchInputPropsType = {
     handleClick: () => void
 }
 
-export const SearchInput: FC<SearchInputPropsType> = ({ isSearchOpen, handleClick }) => {
+export const SearchInput: FC<SearchInputPropsType> = memo(({ isSearchOpen, handleClick }) => {
     const { searchValue, setSearchInputValue } = useSearch();
     const [isActiveSearchInput, setIsActiveSearchInput] = useState(false);
 
@@ -55,4 +55,4 @@ export const SearchInput: FC<SearchInputPropsType> = ({ isSearchOpen, handleClic
             </button>
         </div>
     )
-}
+})

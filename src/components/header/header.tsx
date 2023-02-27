@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
 
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ import avatar from '../../assets/logo/avatar.png';
 import cleverlandLogo from '../../assets/logo/cleverlandLogo.png';
 import { MenuBlock } from '../menu-block';
 
-export const Header: FC = () => {
+export const Header: FC = memo(() => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const onToggleBurgerMenu = () => setIsMenuOpen(!isMenuOpen);
 	const buttonClass = classnames({
@@ -51,4 +51,4 @@ export const Header: FC = () => {
 			</div>
 		</header>
 	)
-};
+})
